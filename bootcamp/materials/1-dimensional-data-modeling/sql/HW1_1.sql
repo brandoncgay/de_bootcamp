@@ -14,7 +14,6 @@
 
 -- CREATE TYPE film_info AS (
 --     film TEXT,
---     year INT,
 --     votes INT,
 --     rating FLOAT,
 --     filmid TEXT
@@ -48,14 +47,14 @@ INSERT INTO actors
 WITH previous_year AS (
     SELECT
         * FROM actors
-    WHERE current_year = 1970
+    WHERE current_year = 1971
 ),
 
 current_year AS (
 SELECT
     actor,
     actorid,
-    ARRAY_AGG(ROW(film, year, votes, rating, filmid)::film_info) AS films,
+    ARRAY_AGG(ROW(film, votes, rating, filmid)::film_info) AS films,
     AVG(rating) AS avg_rating,
     CASE
         WHEN AVG(rating) > 8 THEN 'star'
@@ -66,7 +65,7 @@ SELECT
     year as current_year
 FROM actor_films
 group by actor, actorid, year
-having year = 1971
+having year = 1972
 )
 
 SELECT
@@ -84,3 +83,4 @@ FROM current_year cy
 FULL OUTER JOIN previous_year py
     ON cy.actor = py.actor
 
+select * from actors where current_year = 1972
