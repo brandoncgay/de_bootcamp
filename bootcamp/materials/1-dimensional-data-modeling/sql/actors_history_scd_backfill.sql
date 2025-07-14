@@ -31,18 +31,18 @@ aggregated as (
         quality_class,
         is_active,
         streak_identifier,
-        MIN(current_year) AS start_date,
-        MAX(current_year) AS end_date
+        MIN(current_year) AS start_year,
+        MAX(current_year) AS end_year
     FROM streak_identify
     GROUP BY actor, actorid, quality_class, is_active, streak_identifier
 )
-
+INSERT INTO actors_history_scd
 select 
     actor,
     actorid,
     quality_class,
     is_active,
-    start_date,
-    end_date
+    start_year,
+    end_year
 from aggregated 
-order by actor;
+order by actor, streak_identifier;
