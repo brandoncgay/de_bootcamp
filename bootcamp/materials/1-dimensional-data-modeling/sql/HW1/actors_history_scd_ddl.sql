@@ -10,4 +10,5 @@ CREATE TABLE actors_history_scd (
     start_year INT,
     end_year INT,
     current_year INT
+    PRIMARY KEY (actor, start_year)
 )
